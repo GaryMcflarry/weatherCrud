@@ -1,0 +1,15 @@
+ .topDiv{
+    height: 33.333%;
+    font-family: var(--font-family);
+    display: block;
+    justify-content: start;
+    align-items: center;
+ }
+
+ .bottomDiv{
+    height: 66.666%;
+    font-family: var(--font-family);
+    display: block;
+ }
+
+ 

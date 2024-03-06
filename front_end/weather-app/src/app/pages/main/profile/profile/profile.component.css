@@ -1,0 +1,67 @@
+.background {
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.414);
+  }
+
+
+  .topDiv {
+    height: 7vh;
+    width: 100vw;
+    background-color: transparent;
+    display: flex;
+    font-family: var(--font-family);
+    color: white;
+}
+
+.middleDiv{
+  width: 100vw;
+  height: 23vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white
+}
+
+.bottomDiv {
+    height: 70vh;
+    width: 100vw;
+    background-color: transparent;
+    display: block;
+    justify-content: center;
+    font-family: var(--font-family);
+}
+
+.accordionRow{
+    display: block;
+    align-items: center;
+    justify-content: center;
+  }
+  
+   .Card {
+    height: 10vh;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: rgba(255, 255, 255, 0.397);
+    border-radius: 6px;
+    padding: 6px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+
+   .butDiv{
+    display: flex;
+    justify-content: center;
+   }
+   
+   .button{
+    background-color: rgba(155, 6, 6, 0.598);
+    color: white
+   }

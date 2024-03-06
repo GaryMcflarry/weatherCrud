@@ -1,0 +1,57 @@
+<ng-container *ngIf="api.user | async as user">
+
+    <div class="background">
+        <div class="topDiv">
+            <button mat-button style="background: transparent; border-color: transparent; margin-top: 5px;"
+                (click)="goBack()"><i class="pi pi-arrow-left" style="font-size: 1.5rem; color: white;"></i></button>
+        </div>
+
+        <div class="middleDiv">
+            <h1>{{username}}</h1>
+        </div>
+
+        <div class="bottomDiv">
+            <div class="butDiv">
+
+                <button (click)="removeAccount()" mat-button class="button" style="color: white;">Delete Account <i
+                        class="pi pi-exclamation-circle" style="color: white;"></i></button>
+
+                <div class="card flex justify-content-center">
+                    <p-confirmDialog #cd [style]="{width: '80vw'}">
+                        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+
+                    </p-confirmDialog>
+                </div>
+            </div>
+
+            <div class="p-3">
+                <!-- using same accordion form the weather-display component -->
+                <p-accordion [multiple]="true" tabStyleClass="surface-200" [activeIndex]="[0]">
+                    <p-accordionTab header="Your Locations"
+                        headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround"
+                        tabStyleClass="border-0"
+                        contentStyleClass="bg-transparent border-none border-bottom-1 border-noround px-0">
+                        <!-- looping for the amount of locations from the location array obtained from the vm (view model) obs -->
+                        <p-scrollPanel [style]="{ width: '90vw', height: '35vh' }">
+                            <ng-container *ngFor="let location of user.locations, let index = index">
+
+                                <div class="accordionRow">
+                                    <div class="Card" style="margin-bottom: 10px;" (click)="remove(location)">
+                                        <p style="color: white;">{{location}}</p>
+                                    </div>
+                                </div>
+
+                            </ng-container>
+                        </p-scrollPanel>
+                    </p-accordionTab>
+                </p-accordion>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,144 @@
+<!-- Way to subscribe to a obs through html in order to make use of its tap -->
+<ng-container *ngIf="vm$ | async as vm">
+
+  <ng-container *ngIf="showBackButton">
+    <button mat-button style="background: transparent; border-color: transparent; margin-top: 5px;"
+      (click)="goBack()"><i class="pi pi-arrow-left" style="font-size: 1.5rem; color: white;"></i></button>
+  </ng-container>
+  <ng-container *ngIf="addButton">
+    <button mat-button style="background: transparent; border-color: transparent; margin-top: 5px; margin-left: 65vw;"
+      (click)="add()"><i class="pi pi-plus" style="font-size: 1.5rem; color: white;"></i></button>
+
+    <div class="card flex justify-content-center">
+      <p-confirmDialog #cd [style]="{width: '80vw'}">
+          <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+          <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+
+      </p-confirmDialog>
+    </div>
+
+
+  </ng-container>
+
+  <!-- <button (click)="setClass('morning')">morning</button>
+  <button (click)="setClass('afternoon')">afternoon</button>
+  <button (click)="setClass('evening')">evening</button>
+  <button (click)="setClass('midday')">midday</button> -->
+
+  <!-- Build with divs, remember that the body is already used by the app component0
+angular.core -> index.html -> <app-root></app-root> -> <app-component></app-component> -> <router-outlet></router-outlet>     -->
+  <div class="topDiv">
+
+    <!-- <ng-container *ngIf="userService.user | async as vm">
+    {{vm | json}}
+      </ng-container> -->
+
+    <!-- how to format date in HTML -->
+    <p class="time">{{vm.current.time | date: 'HH:mm aa'}}</p>
+  </div><!-- Please align to center with screens -->
+
+  <!-- <ng-container *ngIf="forcast$ | async as forcast">
+
+  <pre>
+
+    {{forcast | json}}
+  </pre>
+</ng-container> -->
+  <div class="middleDiv">
+    <p class="temp">{{vm.current.currentTemp | number: '1.0-0'}}°C</p>
+    <p class="city">{{vm.current.location}}</p>
+    <p class="condition">{{vm.current.condition}}</p>
+    <P class="feelLike">{{[vm.forecast.maxTemp | number: '1.0-0'] + '/' + [vm.forecast.minTemp | number: '1.0-0']}}</P>
+  </div>
+
+
+  <!-- Way to manipulate url routing (refer to routing module) -->
+  <!-- <div routerLink = "/main/Pretoria">
+  Pretoria
+</div>
+<div routerLink = "/main/Centurion">
+  Centurion
+</div>
+<div routerLink = "/main/London">
+  London
+</div>
+<div routerLink = "/main/Paris">
+  Paris
+</div>
+<div routerLink = "/main/Moscow">
+  Moscow
+</div>
+<div routerLink = "/main/Tokyo">
+  Tokyo
+</div> -->
+  <!-- <ng-container *ngIf="vm$ | async as vm">
+  <pre>
+
+    {{vm | json}}
+  </pre>
+</ng-container> -->
+
+  <!-- <ng-container *ngIf="current$ | async as data">
+  <div class="middleDiv">
+    <p class="temp">{{data.temp}}</p>
+    <p class="temp">{{data.current.temp_c}}</p>
+    <p class="city">{{data.location}}</p>
+  </div>
+  <pre>
+
+    {{data | json}}
+  </pre>
+</ng-container> -->
+
+  <!-- make use of the browser elements in order to show how thw divs work together -->
+  <div class="tableDiv">
+    <p-scrollPanel [style]="{ width: '100vw', height: '45vh' }">
+      <div class="p-3">
+        <!-- tabstyleclass and headerstyleclass are things from the accordion api docs from primeng -->
+        <p-accordion [multiple]="true" tabStyleClass="surface-200" [activeIndex]="[0]">
+          <ng-container *ngFor='let day of vm.forecast.Days; index as i; first as first'>
+            <!-- {{day.date_epoch}}<br> -->
+
+            <p-accordionTab [header]="day.label"
+              headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround"
+              tabStyleClass="border-0"
+              contentStyleClass="bg-transparent border-none border-bottom-1 border-noround px-0 overflow-x-scroll">
+              <div class="accordionRow">
+                <ng-container *ngFor="let hour of day.hoursData">
+                  <div class="temp-time-display">
+                    <span>{{ hour.fhourTime | date: 'HH:mm' }}</span>
+                    <span><img [src]="hour.fImage"></span>
+                    <span>{{ hour.ftemp | number: '1.0-0' }}°C</span>
+                    <span><img width="23px" height="23px"
+                        src="assets\images\icons8-drop-of-blood-100.png">{{hour.fPrecip}}%</span>
+                  </div>
+                </ng-container>
+              </div>
+            </p-accordionTab>
+          </ng-container>
+          <!-- <p-accordionTab header="Monday" headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround" tabStyleClass="border-0" contentStyleClass="bg-transparent border-none border-bottom-1 border-noround">
+  
+        </p-accordionTab>
+        <p-accordionTab header="Tuesday" headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround" tabStyleClass="border-0" contentStyleClass="bg-transparent border-none border-bottom-1 border-noround">
+  
+        </p-accordionTab>
+        <p-accordionTab header="Wednesday" headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround" tabStyleClass="border-0" contentStyleClass="bg-transparent border-none border-bottom-1 border-noround">
+  
+        </p-accordionTab>
+        <p-accordionTab header="Thursday" headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround" tabStyleClass="border-0" contentStyleClass="bg-transparent border-none border-bottom-1 border-noround">
+  
+        </p-accordionTab>
+        <p-accordionTab header="Friday" headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround" tabStyleClass="border-0" contentStyleClass="bg-transparent border-none border-bottom-1 border-noround">
+  
+        </p-accordionTab>
+        <p-accordionTab header="Saturday" headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround" tabStyleClass="border-0" contentStyleClass="bg-transparent border-none border-bottom-1 border-noround">
+  
+        </p-accordionTab>
+        <p-accordionTab header="Sunday" headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround" tabStyleClass="border-0" contentStyleClass="bg-transparent border-none border-bottom-1 border-noround">
+  
+        </p-accordionTab> -->
+        </p-accordion>
+      </div>
+    </p-scrollPanel>
+  </div>
+</ng-container>

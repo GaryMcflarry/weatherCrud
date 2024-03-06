@@ -1,0 +1,18 @@
+
+.topDiv{
+  width: 100vw;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+}
+
+.middleDiv {
+  height: 80vh;
+  width: 100vw;
+}
+
+.bottomDiv{
+  height: 10vh;
+  width: 100vw;
+}
+

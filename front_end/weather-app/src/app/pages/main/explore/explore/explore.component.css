@@ -1,0 +1,45 @@
+.background {
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.414);
+  }
+
+  .topDiv {
+    height: 7vh;
+    width: 100vw;
+    background-color: transparent;
+    display: block;
+    justify-content: center;
+}
+
+.bottomDiv {
+    height: 93vh;
+    width: 100vw;
+    background-color: transparent;
+    display: block;
+    justify-content: center;
+}
+
+
+.accordionRow{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+ .Card {
+  height: 35vh;
+  width: 90vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 6px;
+  padding: 6px;
+  color: white;
+ }
+
+ 

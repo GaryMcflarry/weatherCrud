@@ -1,0 +1,16 @@
+<!-- the entire div can become a button but only if canRoute is true -->
+<div style="padding: 6px; border-radius: 6px;" class="background" [class]="this.bg" (click)="canRoute? router(): ''">
+    <ng-container *ngIf="current$ | async as current">
+        <div class="topDiv">
+            <h1>{{current.location}} </h1>
+            <h3>{{current.country}}</h3>
+            <p>{{current.condition}} </p>
+        </div>
+        <div class="bottomDiv">
+            <h1 style="margin-left: 30vh;">{{current.currentTemp | number: '1.0-0'}}°C</h1>
+            <p><i class="pi pi-compass"></i> {{current.windSpeed}} km/h {{current.windDir}}</p>
+            <p style="margin-left: 30vh;">{{current.time | date: 'HH:mm aa'}}</p>
+
+        </div>
+    </ng-container>
+</div>

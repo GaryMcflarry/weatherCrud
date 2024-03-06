@@ -1,0 +1,6 @@
+{
+    "env": {
+        "MCLI_PRIVATE_API_KEY": "weatherApp",
+        "JWT_KEY": "theChamberOfSecrets"
+    }
+}

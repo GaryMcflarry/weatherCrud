@@ -1,0 +1,58 @@
+<div class="topDiv">
+  <button mat-button style="background: transparent; border-color: transparent;" (click)="sidebarVisible = true"><i class="pi pi-bars"
+      style="font-size: 1.5rem; color: white;"></i></button>
+  <div class="card flex justify-content-center">
+    <!-- align according to screen size -->
+    
+    <div *ngIf="menuCol$ | async">
+    <p-sidebar [styleClass]="'w-13rem ' + menuCss" [(visible)]="sidebarVisible" >
+      <p-button  (onClick)="profile()" styleClass=" bg-transparent w-10rem border-white border-none border-bottom-2 border-noround" label="Profile"></p-button>
+      <p-button (onClick)="logOut()" styleClass=" bg-transparent w-10rem border-white border-none border-bottom-2 border-noround" label="Log Out"></p-button>
+      <p-button (onClick)="explore()" styleClass=" bg-transparent w-10rem border-white border-none border-bottom-2 border-noround" label="Explore"></p-button>
+    </p-sidebar>
+  </div>
+  </div>
+
+  <!-- <div class="p-2 w-full">
+    <span class="p-input-icon-left w-full">
+      <i class="pi pi-search" style="color: white;"></i> -->
+      <!-- fix border color for the search button -->
+      <!-- <input pInputText type="button" (click)="search()" placeholder="Search" class="w-full h-2rem p-inputtext-sm border-round border-white bg-transparent" />
+    </span>
+  </div> -->
+  <!-- <button (click)="swiperTest()">test</button> -->
+</div>
+
+<div class="middleDiv">
+
+  <!-- <ng-container *ngIf="userService.user | async as vm">
+
+  <ng-container *ngFor="let locations of vm.locations">
+
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div ngFor="vm.locations" class="swiper-slide"><app-weather-display></app-weather-display></div>
+      </div>
+    </div>
+  </ng-container>
+
+  </ng-container> -->
+
+
+  <!-- swiper.js finally works, however need to make sure the background image does change, 
+    since it only takes the style from the last slide-->
+  <ng-container *ngIf="api.user | async as user">
+    <!-- #SwiperEl is making use of the view child -->
+    <swiper-container pagination="true" keyboard="true" css-mode="true" #SwiperEl initial-slide="0" slides-per-view="1">
+    <ng-container *ngFor="let location of user.locations, let index = index">
+        <swiper-slide>
+            <!-- injecting the location data for the userService.user observable into the weather-display component -->
+          <app-weather-display [data]="location"></app-weather-display>
+        </swiper-slide>	
+    </ng-container>
+  </swiper-container> 
+  </ng-container>
+
+
+<div class="bottomDiv">
+</div>

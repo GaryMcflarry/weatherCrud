@@ -1,0 +1,103 @@
+
+
+.img{
+
+  width: 125px;
+  height: 125px;
+  margin-left: 8vw;
+  margin-top: 8vh;
+
+}
+.imgDiv{
+  height: 30vh;
+  width: 100vw;
+}
+
+.titleDiv {
+  width: 95vw;
+  height: 30vh;
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+}
+
+h1{
+  font-size: xx-large;
+  text-shadow: 1cm;
+  color: white;
+  font-family: var(--font-family);
+}
+
+.p{
+  font-size: x-small;
+  text-shadow: 1cm;
+  color: white;
+}
+
+.inputDiv {
+  width: 100vw;
+  height: 12vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  width: 80vw;
+  height: 7vh
+}
+
+.pInput {
+  width: 80vw;
+  height: 7vh
+}
+
+.butDiv {
+  align-items: center;
+  display: grid;
+  justify-content: center;
+}
+
+.but{
+  margin-top: 10px;
+    height: 6vh;
+    width: 23vw;
+    background-color: white;
+}
+
+.signDiv{
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  margin-top: 10px;
+  height: 3vh
+}
+
+.signBut { 
+  background-color: transparent;
+}
+
+.dialogInputDiv {
+  width: 100vw;
+  height: 12vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.dialogButDiv {
+  margin-top:  50px;
+  align-items: center;
+  display: grid;
+  justify-content: center;
+}
+
+.dialogBut{
+    height: 6vh;
+    width: 30vw;
+}
+
+.dialogP{
+  color:  grey;
+}

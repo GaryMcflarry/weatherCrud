@@ -1,0 +1,79 @@
+.tableDiv {
+    width: 100vw;
+    height: 30vh;
+    background-color: transparent;
+  
+  }
+  
+.topDiv {
+    height: 10vh;
+    width : 100vw;
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+}
+
+.middleDiv {
+    height : 25vh;
+    width: 100vw;
+    align-items: center;
+    display: block;
+}
+  
+.time {
+    color: white;
+    font-size: large;
+    font-family: var(--font-family);
+  }
+
+.temp{
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-family);
+  font-size: 70px;
+  margin-top: 5vh;
+}
+
+.city{
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-family);
+  margin-top: 5vh;
+  font-size: 18px;
+}
+
+.condition{
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-family);
+  margin-top: 1vh;
+  font-size: 12px;
+}
+
+.feelLike{
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-family);
+  margin-top: 1vh;
+  font-size: 10px;
+}
+
+.accordionRow{
+  display: inline-flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.temp-time-display{
+  color: white; margin: 0px 5px; 
+  justify-content: center;
+  width: 100%;
+  span {
+    display: flex;
+    justify-content: center;
+  }
+}

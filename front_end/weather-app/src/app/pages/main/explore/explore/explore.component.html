@@ -1,0 +1,129 @@
+<!-- <ng-container *ngIf="  params$ | async as params; else ShowExplore">
+</ng-container> -->
+
+
+<ng-container *ngIf="vm$ | async as vm ">
+    <!-- <pre>{{vm | json}}</pre> -->
+
+    <!-- using the params obs if statment to check if a certian location has been selected, if not show the ng template noted by showExplore  -->
+    <ng-container *ngIf="vm.params; else ShowExplore">
+        <!-- injecting variable with values into component that will be used -->
+        <app-weather-display [data]="vm.params.location" [showBackButton]=true [addButton]=true></app-weather-display>
+
+
+
+    </ng-container>
+    
+    <!-- will display when none of the cards were selectedL -->
+    <ng-template #ShowExplore>
+        <div class="background">
+            <div class="topDiv">
+                <!-- button that will open sidebar with other buttons -->
+                <button mat-button style="background: transparent; border-color: transparent; margin: 10px;"
+                    (click)="sidebarVisible = true">
+                    <i class="pi pi-bars" style="font-size: 1.5rem; color: white;"></i>
+                </button>
+
+                <button mat-button
+                    style="background: transparent; border-color: transparent; margin-left: 60vw;"
+                    (click)="showDialog()">
+                    <i class="pi pi-plus" style="font-size: 1.5rem; color: white;"></i>
+                </button>
+
+                <div *ngIf="this.menuCol$ | async">
+                    <p-sidebar [styleClass]="'w-13rem ' + menuCss" [(visible)]="sidebarVisible">
+                        <p-button (onClick)="profile()"
+                            styleClass=" bg-transparent w-10rem border-white border-none border-bottom-2 border-noround"
+                            label="Profile"></p-button>
+                        <p-button (onClick)="logOut()"
+                            styleClass=" bg-transparent w-10rem border-white border-none border-bottom-2 border-noround"
+                            label="Log Out"></p-button>
+                        <p-button (onClick)="routeMenu()"
+                            styleClass="bg-transparent w-10rem border-white border-none border-bottom-2 border-noround"
+                            label="Menu"></p-button>
+                    </p-sidebar>
+                </div>
+
+
+                <p-dialog [(visible)]="visible" position="top" [style]="{ width: '100vw' }">
+                    <!-- continue -->
+                    <input style="width: 100%; margin-bottom: 10px;" pInputText [formControl]="locationSearch" />
+                    <!-- <form [formGroup]="formSearch">
+                    <input style="width: 60vw;"   pInputText pKeyFilter="User" placeholder="Search Location" formControlName="search" />
+                    <P>{{formSearch.errors}}</P>
+                    <button mat-raised-button style="width: 30vw; height: 6vh; border-radius: 6px; background-color: rgb(0, 128, 255);" 
+                    [disabled]="formSearch.invalid" (click)="search()"><i class="pi pi-search" style="font-size: 1.5rem; color: white;"></i></button>   
+                    </form> -->
+                    <ng-container *ngIf="searchResults | async as ls; ">
+                        <ng-container *ngIf="!ls.error;else showError">
+                            <ng-container *ngFor="let los of ls.data">
+    
+                                <div class="Card" style="margin-bottom: 20px;">
+                                    <app-card style="height: 100%; display: block" [canRoute]=true [data]="los.location"></app-card>
+                                </div>
+                            </ng-container>
+
+                        </ng-container>
+                        <ng-template #showError>
+                            <p style="color: rgb(216, 76, 76)">{{ls.message}}</p>
+                        </ng-template>
+
+                </ng-container>
+
+
+                </p-dialog>
+
+            </div>
+
+            <div class="bottomDiv">
+                <p-scrollPanel [style]="{ width: '100vw', height: '91vh' }">
+                    <div class="p-3">
+                        <!-- using same accordion form the weather-display component -->
+                        <p-accordion [multiple]="true" tabStyleClass="surface-200" [activeIndex]="[1]">
+                            <p-accordionTab header="Your Locations"
+                                headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround"
+                                tabStyleClass="border-0"
+                                contentStyleClass="bg-transparent border-none border-bottom-1 border-noround px-0 overflow-x-scroll">
+                                <!-- looping for the amount of locations from the location array obtained from the vm (view model) obs -->
+                                <ng-container *ngFor="let location of vm.user.locations, let index = index">
+
+                                    <div class="accordionRow">
+                                        <div class="Card" style="margin-bottom: 20px;">
+                                            <!-- using a card component and inject a string of the location into every one -->
+                                            <app-card style="height: 100%; display: block" [data]="location"></app-card>
+                                        </div>
+
+                                    </div>
+
+                                </ng-container>
+                            </p-accordionTab>
+
+                            <!-- same accordion but this one makes use of the suggested locations from the suggested array, keep in mind it was altered by the obs -->
+                            <p-accordionTab header="Suggested Locations"
+                                headerStyleClass="bg-transparent text-white border-none border-bottom-1 border-noround"
+                                tabStyleClass="border-0"
+                                contentStyleClass="bg-transparent border-none border-bottom-1 border-noround px-0 overflow-x-scroll">
+                                <!-- looping all the locations that arent used by the user -->
+                                <ng-container *ngFor=" let location of vm.suggested, let index = index">
+                                    <div class="accordionRow">
+
+                                        <div class="Card" style="margin-bottom: 20px;">
+                                            <!-- giving value for injected variable that will be used by component -->
+                                            <app-card style="height: 100%; display: block" [data]="location"
+                                                [canRoute]=true></app-card>
+
+                                        </div>
+
+                                    </div>
+                                </ng-container>
+                            </p-accordionTab>
+                        </p-accordion>
+                    </div>
+                </p-scrollPanel>
+            </div>
+        </div>
+    </ng-template>
+</ng-container>
+<!-- <ng-container *ngIf="api.user | async as user ">
+   
+</ng-container> -->
