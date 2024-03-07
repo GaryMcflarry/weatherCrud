@@ -1,1 +1,1 @@
-Weather crud that makes use of two different apis
+Weather crud that makes use of two different api
