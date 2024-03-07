@@ -191,7 +191,7 @@ router.delete("/delete/:userId", checkAuth, (req, res, next) => {
 });
 
 //The display route
-router.get("/display", checkAuth, (req, res, next) => {
+router.get("/display", (req, res, next) => {
   //Obtaining all available users
   User.find()
     .exec()
@@ -278,7 +278,7 @@ router.patch("/edit/:userId", checkAuth, (req, res, next) => {
     });
 });
 
-router.post("/:userId/addLocation", checkAuth, (req, res, next) => {3
+router.post("/:userId/addLocation", checkAuth, (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -296,7 +296,7 @@ router.post("/:userId/addLocation", checkAuth, (req, res, next) => {3
       User.updateOne({ _id: id }, { $push: { locations: newLocation } })
         .exec()
         .then((result) => {
-            user.locations.push(newLocation)
+          user.locations.push(newLocation);
           //showing the updating was successful
           console.log("132", result);
           const token = jwt.sign(
@@ -310,7 +310,8 @@ router.post("/:userId/addLocation", checkAuth, (req, res, next) => {3
             {
               //token only lasts 10 min
               expiresIn: "10m",
-            })
+            }
+          );
           res.status(200).json({
             message: "Location added",
             //once everything is successful the user's details and the token will be sent for use
@@ -334,7 +335,7 @@ router.post("/:userId/addLocation", checkAuth, (req, res, next) => {3
     );
 });
 
-router.post("/:userId/removelocation", checkAuth, (req, res, next) => {3
+router.post("/:userId/removelocation", checkAuth, (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -352,9 +353,9 @@ router.post("/:userId/removelocation", checkAuth, (req, res, next) => {3
       User.updateOne({ _id: id }, { $pull: { locations: oldLocation } })
         .exec()
         .then((result) => {
-          user.locations.pull(oldLocation)
-          console.log("RESULT: ", result)
-          console.log("LOCATIONS: ", user.locations)
+          user.locations.pull(oldLocation);
+          console.log("RESULT: ", result);
+          console.log("LOCATIONS: ", user.locations);
           const token = jwt.sign(
             {
               username: user.username,
@@ -366,7 +367,8 @@ router.post("/:userId/removelocation", checkAuth, (req, res, next) => {3
             {
               //token only lasts 10 min
               expiresIn: "10m",
-            })
+            }
+          );
           res.status(200).json({
             message: "Location removed",
             //once everything is successful the user's details and the token will be sent for use
@@ -377,7 +379,6 @@ router.post("/:userId/removelocation", checkAuth, (req, res, next) => {3
               locations: user.locations,
               admin: user.admin,
             },
-            
             success: true,
           });
         })
@@ -394,7 +395,7 @@ router.post("/:userId/removelocation", checkAuth, (req, res, next) => {3
 router.post("/remove", checkAuth, (req, res, next) => {
   // Extract the user ID from the request body or from the authenticated user's data
   const userIdToRemove = req.body.userId; // Assuming the client sends the user ID to remove
-  
+
   // Use Mongoose to find the user by ID and remove it from the database
   User.deleteOne(userIdToRemove)
     .exec()

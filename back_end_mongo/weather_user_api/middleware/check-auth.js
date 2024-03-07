@@ -4,8 +4,6 @@ const jwt = require('jsonwebtoken');
 //Key: authorization
 //Value: Bearer {{token}}
 module.exports = (req, res, next) => {
-    next();
-
     try {
         //obtaining the token from headers
         const token = req.headers.authorization.split(" ")[1];
