@@ -1,2 +1,1 @@
-Finish crud and deploy it
-yes
+Weather crud that makes use of two different apis
