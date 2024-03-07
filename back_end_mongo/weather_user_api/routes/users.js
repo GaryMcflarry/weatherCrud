@@ -169,7 +169,7 @@ router.post("/login", (req, res, next) => {
 });
 
 //The delete route
-router.delete("/delete/:userId", checkAuth, (req, res, next) => {
+router.delete("/delete/:userId",  (req, res, next) => {
   //id obtianed from the url
   const id = req.params.userId;
   //checking to see if the id is correct
@@ -217,7 +217,7 @@ router.get("/display", (req, res, next) => {
 });
 
 //The spesific display route
-router.get("/display/:userId", checkAuth, (req, res, next) => {
+router.get("/display/:userId",  (req, res, next) => {
   //Obtaining requested id from user
   const id = req.params.userId;
   //Finding the user who has that id
@@ -245,7 +245,7 @@ router.get("/display/:userId", checkAuth, (req, res, next) => {
 });
 
 //The edit route
-router.patch("/edit/:userId", checkAuth, (req, res, next) => {
+router.patch("/edit/:userId", (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -278,7 +278,7 @@ router.patch("/edit/:userId", checkAuth, (req, res, next) => {
     });
 });
 
-router.post("/:userId/addLocation", checkAuth, (req, res, next) => {
+router.post("/:userId/addLocation",  (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -335,7 +335,7 @@ router.post("/:userId/addLocation", checkAuth, (req, res, next) => {
     );
 });
 
-router.post("/:userId/removelocation", checkAuth, (req, res, next) => {
+router.post("/:userId/removelocation",  (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -392,7 +392,7 @@ router.post("/:userId/removelocation", checkAuth, (req, res, next) => {
     );
 });
 
-router.post("/remove", checkAuth, (req, res, next) => {
+router.post("/remove",  (req, res, next) => {
   // Extract the user ID from the request body or from the authenticated user's data
   const userIdToRemove = req.body.userId; // Assuming the client sends the user ID to remove
 
