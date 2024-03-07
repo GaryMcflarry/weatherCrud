@@ -245,7 +245,7 @@ router.get("/display/:userId", checkAuth, (req, res, next) => {
 });
 
 //The edit route
-router.patch("/edit/:userId", (req, res, next) => {
+router.patch("/edit/:userId", checkAuth, (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -278,7 +278,7 @@ router.patch("/edit/:userId", (req, res, next) => {
     });
 });
 
-router.post("/:userId/addLocation",  (req, res, next) => {
+router.post("/:userId/addLocation", checkAuth, (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
