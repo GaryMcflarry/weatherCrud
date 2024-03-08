@@ -33,6 +33,7 @@ import { InterceptorService } from './services/interceptor.service';
     MessageService,
     DatePipe,
     {
+      //allowing the interceptor to look for http requests
       provide: HTTP_INTERCEPTORS,
             useClass: InterceptorService,
             multi: true

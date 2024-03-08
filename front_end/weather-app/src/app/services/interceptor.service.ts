@@ -1,13 +1,16 @@
 import { HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from './api.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InterceptorService {
+
+  //This interceptor looks for every http request sent from the client to the
+  //back end (API) and intercepts it into include the authoriazation header with
+  //with the token 
   token: string = '';
   constructor(private store: StorageService) {}
 
@@ -23,16 +26,12 @@ export class InterceptorService {
       const tokenizedReq = req.clone({
         headers: req.headers.set('authorization', 'Bearer ' + token),
       });
-      console.log('interceptor', tokenizedReq);
+      //console.log('interceptor', tokenizedReq);
 
       return next.handle(tokenizedReq);
     }
 
     console.log('interceptor no token: ', req.headers);
-    // if (this.token) {
-    //   const tokenizedReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + this.token) });
-    //   return next.handle(tokenizedReq);
-    // }
     return next.handle(req);
   }
 }
