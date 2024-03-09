@@ -25,21 +25,10 @@ export class LoginComponent {
     ]))
   });
 
-  formSign = this.formBuilder.group({
-    username : new FormControl('', Validators.compose([
-      Validators.required
-    ])),
-    password: new FormControl('', Validators.compose([
-      Validators.required
-    ]))
-  });
-
   //variable to show the sign up dialog, but that may change in the future :)
   visible!: boolean;
-
   //varialble used to make use of the correct logo depending on the time of day
   image: string | undefined;
-
   //used for the cycle service
   hour!: number
   
@@ -61,16 +50,13 @@ export class LoginComponent {
     })
     )
   
+  ngOnInit() {}
 
+  // logForm(){
+  //   console.log('Form Login: ', this.formLogin.getRawValue())
+  //   console.log('Form Login: ', this.formLogin)
 
-  ngOnInit() {
-  }
-
-  logForm(){
-    console.log('Form Login: ', this.formLogin.getRawValue())
-    console.log('Form Login: ', this.formLogin)
-
-  }
+  // }
 
   loginUser() {
     console.log('Form Login: ', this.formLogin.value)
@@ -85,18 +71,11 @@ export class LoginComponent {
   // }
 
   signUp() {
-    //using form control to sign up and depending on the outcome dealing with the response
-    if (this.formSign.valid) {
-        this.api.signUpUser(this.formSign.value)
-    }
+   
+   
   }
 
-  //for the show dialog functionality
-  showDialog() {
 
-    this.visible = true;
-
-  }
 }
 
 
