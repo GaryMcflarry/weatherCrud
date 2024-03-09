@@ -36,7 +36,7 @@ export class ApiService {
     return this.decipherToken(jwtDecode(token))
   }
   decipherToken(info : any) {
-     console.log('decrypted token info (LETS GOOOOOOO)' , info)
+    //console.log('decrypted token info (LETS GOOOOOOO)' , info)
     return info
   }
   // getUserInfo() {

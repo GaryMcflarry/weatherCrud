@@ -5,18 +5,23 @@ const jwt = require('jsonwebtoken');
 //Value: Bearer {{token}}
 module.exports = (req, res, next) => {
     try {
-        //obtaining the token from headers
+        // Check if the Authorization header exists
+        if (!req.headers.authorization) {
+            throw new Error('Authorization header missing');
+        }
+
+        // Obtaining the token from headers
         const token = req.headers.authorization.split(" ")[1];
-        //verifying if the token is the same with the one in the enviroment
+        // Verifying if the token is the same with the one in the environment
         const decoded = jwt.verify(token, process.env.JWT_KEY);
-        req.userData = decoded
+        req.userData = decoded;
         next();
     } catch (error) {
-        //error code
+        // Error handling: log the error and send response
+        console.error('Error in authentication:', error);
         return res.status(400).json({
             message: 'Auth Failed',
-            error
-        })
+            error: error.message // Sending only the error message for security reasons
+        });
     }
-    
 };

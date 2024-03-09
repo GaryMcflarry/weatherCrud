@@ -137,7 +137,7 @@ router.post("/login", (req, res, next) => {
             process.env.JWT_KEY,
             {
               //token only lasts 10 min
-              expiresIn: "1m",
+              expiresIn: "10m",
             }
           );
           return res.status(200).json({

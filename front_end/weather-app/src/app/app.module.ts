@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -6,8 +6,9 @@ import { ToastModule } from 'primeng/toast';
 import { BrowserModule } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -30,7 +31,13 @@ import { DatePipe } from '@angular/common';
   ],
   providers: [
     MessageService,
-    DatePipe
+    DatePipe,
+    {
+      //allowing the interceptor to look for http requests
+      provide: HTTP_INTERCEPTORS,
+            useClass: InterceptorService,
+            multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
