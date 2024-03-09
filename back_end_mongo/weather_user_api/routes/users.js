@@ -43,7 +43,7 @@ router.get("/signup_", (req, res, next) => {
 router.post("/signup", (req, res, next) => {
   //checking if the requested body is correct
   //This request body only taked in the username and password
-  console.log("user post", req.body);
+  console.log("sign post", req.body);
   //checking if a user doesn't already exist
   User.find({ username: req.body.username })
     .exec()

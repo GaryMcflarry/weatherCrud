@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { interval, map, startWith, tap } from 'rxjs';
 import { CycleServiceService } from 'src/app/services/cycle-service.service';
-import { FormBuilder, Validators, FormControl } from "@angular/forms";
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,20 +11,25 @@ import { FormBuilder, Validators, FormControl } from "@angular/forms";
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
-  constructor(private cycle: CycleServiceService, public formBuilder: FormBuilder) {}
+  constructor(
+    private cycle: CycleServiceService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private api: ApiService
+  ) {}
 
   formSignUp = this.formBuilder.group({
-    username : new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.maxLength(10)
-      //regex being used as a way of checking the format of a email
-      // Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-    ])),
-    password: new FormControl('', Validators.compose([
-      Validators.required
-    ]))
+    username: new FormControl(
+      '',
+      Validators.compose([
+        Validators.required,
+        Validators.maxLength(10),
+        //regex being used as a way of checking the format of a email
+        // Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+      ])
+    ),
+    password: new FormControl('', Validators.compose([Validators.required])),
   });
-
 
   borderCol = '';
 
@@ -45,4 +52,15 @@ export class SignupComponent {
       }
     })
   );
+
+  signUp() {
+    console.log('Form Signup:', this.formSignUp.value);
+    if (this.formSignUp.valid) {
+      this.api.signUpUser(this.formSignUp.value);
+    }
+  }
+
+  goBack() {
+    this.router.navigate(['/auth']);
+  }
 }
