@@ -3,6 +3,7 @@ import { CycleServiceService } from 'src/app/services/cycle-service.service';
 import {  FormBuilder, Validators, FormControl } from "@angular/forms";
 import { ApiService } from 'src/app/services/api.service';
 import { interval, map, startWith, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -25,14 +26,12 @@ export class LoginComponent {
     ]))
   });
 
-  //variable to show the sign up dialog, but that may change in the future :)
-  visible!: boolean;
   //varialble used to make use of the correct logo depending on the time of day
   image: string | undefined;
   //used for the cycle service
   hour!: number
   
-  constructor(private cycle: CycleServiceService, public formBuilder: FormBuilder, private api: ApiService) {}
+  constructor(private cycle: CycleServiceService, public formBuilder: FormBuilder, private api: ApiService, private router: Router) {}
 
 
   //making use of the service to the determine the accurate logo
@@ -70,9 +69,8 @@ export class LoginComponent {
   //   this.messageService.add({ severity: 'success', summary: 'Success', detail: 'You can log in!!!', life: 3000 });
   // }
 
-  signUp() {
-   
-   
+  signup() {
+    this.router.navigate(['auth/signup']);
   }
 
 
