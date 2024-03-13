@@ -3,6 +3,7 @@ import { CycleServiceService } from 'src/app/services/cycle-service.service';
 import {  FormBuilder, Validators, FormControl } from "@angular/forms";
 import { ApiService } from 'src/app/services/api.service';
 import { interval, map, startWith, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -25,25 +26,12 @@ export class LoginComponent {
     ]))
   });
 
-  formSign = this.formBuilder.group({
-    username : new FormControl('', Validators.compose([
-      Validators.required
-    ])),
-    password: new FormControl('', Validators.compose([
-      Validators.required
-    ]))
-  });
-
-  //variable to show the sign up dialog, but that may change in the future :)
-  visible!: boolean;
-
   //varialble used to make use of the correct logo depending on the time of day
   image: string | undefined;
-
   //used for the cycle service
   hour!: number
   
-  constructor(private cycle: CycleServiceService, public formBuilder: FormBuilder, private api: ApiService) {}
+  constructor(private cycle: CycleServiceService, public formBuilder: FormBuilder, private api: ApiService, private router: Router) {}
 
 
   //making use of the service to the determine the accurate logo
@@ -61,16 +49,13 @@ export class LoginComponent {
     })
     )
   
+  ngOnInit() {}
 
+  // logForm(){
+  //   console.log('Form Login: ', this.formLogin.getRawValue())
+  //   console.log('Form Login: ', this.formLogin)
 
-  ngOnInit() {
-  }
-
-  logForm(){
-    console.log('Form Login: ', this.formLogin.getRawValue())
-    console.log('Form Login: ', this.formLogin)
-
-  }
+  // }
 
   loginUser() {
     console.log('Form Login: ', this.formLogin.value)
@@ -84,19 +69,11 @@ export class LoginComponent {
   //   this.messageService.add({ severity: 'success', summary: 'Success', detail: 'You can log in!!!', life: 3000 });
   // }
 
-  signUp() {
-    //using form control to sign up and depending on the outcome dealing with the response
-    if (this.formSign.valid) {
-        this.api.signUpUser(this.formSign.value)
-    }
+  signup() {
+    this.router.navigate(['auth/signup']);
   }
 
-  //for the show dialog functionality
-  showDialog() {
 
-    this.visible = true;
-
-  }
 }
 
 

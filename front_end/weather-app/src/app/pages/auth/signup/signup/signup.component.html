@@ -1,1 +1,33 @@
-<p>signup works!</p>
+<div class="fullPage" *ngIf="border$ | async">
+
+    <div class="gifDiv">
+        <img src="assets/animations/cycle.gif" [class]="this.borderCol">
+    </div>
+
+    <div class="bottomDiv">
+
+        <div class="titleDiv">
+            <h1>Join Today!...</h1>
+        </div>
+
+        <form [formGroup]="formSignUp">
+
+            <div class="userInput">
+                <input class="input" pInputText pKeyFilter="User" placeholder="Username" formControlName="username" />
+                <P>{{formSignUp.errors}}</P>
+            </div>
+            <div class="passwordInput">
+                <p-password styleClass="width: 100%;" placeholder="Password" formControlName="password"
+                    [feedback]="false" [toggleMask]="true"></p-password>
+            </div>
+            <div class="butDiv">
+                <button mat-raised-button [disabled]="formSignUp.invalid" (click)="signUp()">Sign Up</button>
+            </div>
+        </form>
+        <button mat-button class="backBut" (click)="goBack()">
+            <i class="pi pi-arrow-left" style="font-size: 1.5rem; color: white;"></i>
+        </button>
+
+    </div>
+
+</div>

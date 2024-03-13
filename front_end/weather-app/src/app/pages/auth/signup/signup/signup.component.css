@@ -1,0 +1,86 @@
+.fullPage {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(240, 248, 255, 0.534);
+}
+
+.gifDiv {
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  width: 90%;
+  height: 90%;
+  border-width: 10px;
+  border-style: solid;
+}
+
+.morning {
+  border-color: cadetblue;
+}
+
+.midday {
+  border-color: lightskyblue;
+}
+
+.afternoon {
+  border-color: palevioletred;
+}
+
+.night {
+  border-color: purple;
+}
+
+.bottomDiv {
+  height: 70vh;
+  width: 100%;
+}
+
+h1 {
+  font-family: fantasy;
+}
+
+.titleDiv {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  height: 15vh;
+  width: 100%;
+}
+
+.userInput {
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.passwordInput {
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  justify-content: center;
+}
+
+.butDiv {
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  justify-content: center;
+}
+
+.input {
+  width: 90%;
+  height: 50%;
+}
+
+.backBut {
+  background: transparent;
+  border-color: transparent;
+  margin-top: 5px;
+}

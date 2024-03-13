@@ -30,24 +30,8 @@
 
 
     <div class="signDiv">
-      <button (click)="showDialog()" class="signBut" mat-button><p class="p">Don't have an account? Sign up</p></button>
-      <p-dialog header="Sign Up" [(visible)]="visible" [style]="{width: '90vw' }" [style]="{height: '90vh' }">
+      <button (click)="signup()" class="signBut" mat-button><p class="p">Don't have an account? Sign up</p></button>
 
-      <form [formGroup]="formSign">
-        <div class="dialogInputDiv">
-          <input class="input" pInputText pKeyFilter="User" placeholder="Create Username" formControlName="username" />
-        </div>
-    
-        <div class="inputDiv">
-          <p-password class="pInput" placeholder="Create Password" formControlName="password" [feedback]="true" [toggleMask]="true"></p-password>
-        </div>
-
-        <div class="dialogButDiv">
-          <button mat-raised-button class="dialogBut" [disabled]="this.formSign.invalid"   (click)="signUp()"><p class="dialogP">Sign Up</p></button>      
-        </div>
-      </form>
-
-    </p-dialog>
     </div>
   </main>
 <!-- </body>  -->
