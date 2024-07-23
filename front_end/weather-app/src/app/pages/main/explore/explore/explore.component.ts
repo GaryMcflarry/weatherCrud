@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  BehaviorSubject,
   combineLatest,
   debounce,
   interval,
@@ -24,12 +23,15 @@ import { CycleServiceService } from 'src/app/services/cycle-service.service';
 export class ExploreComponent {
   //checking to see if the params has any value (the name of the location)
   params$ = this.activated.params.pipe(
+    tap((data: any ) => console.log('params: ' , data)),
     map((data: any) => (Object.keys(data).length > 0 ? data : null))
   );
 
   //combining two obs to make use of them in the html
-  vm$ = combineLatest([this.api.user, this.params$]).pipe(
-    map(([user, params]) => {
+
+
+  vm$ = combineLatest([this.api.user, this.params$, this.api.tokenExp$]).pipe(
+    map(([user, params, ExpltokenExp$]) => {
       // console.log(user)
       const suggested = this.suggestedlocations.filter(
         (x) =>
@@ -41,17 +43,16 @@ export class ExploreComponent {
         // }
       );
       // console.log("sugg =>" , suggested)
-      return { user, params, suggested };
+      return { user, params, suggested, ExpltokenExp$ };
     })
   );
+
+ 
 
   sidebarVisible!: boolean;
   menuCss = '';
 
   visible!: boolean;
-
-  sLocation!: string;
-
   // formSearch = this.formBuilder.group({
   //   search: new FormControl('', Validators.compose([Validators.required])),
   // });
@@ -65,7 +66,6 @@ export class ExploreComponent {
     private router: Router,
     public api: ApiService,
     private activated: ActivatedRoute,
-    private formBuilder: FormBuilder
   ) {}
 
   //array of suggested locations

@@ -4,13 +4,13 @@
   <div class="card flex justify-content-center">
     <!-- align according to screen size -->
     
-    <div *ngIf="menuCol$ | async">
+    <div *ngIf="vm$ | async">
     <p-sidebar [styleClass]="'w-13rem ' + menuCss" [(visible)]="sidebarVisible" >
       <p-button  (onClick)="profile()" styleClass=" bg-transparent w-10rem border-white border-none border-bottom-2 border-noround" label="Profile"></p-button>
       <p-button (onClick)="logOut()" styleClass=" bg-transparent w-10rem border-white border-none border-bottom-2 border-noround" label="Log Out"></p-button>
       <p-button (onClick)="explore()" styleClass=" bg-transparent w-10rem border-white border-none border-bottom-2 border-noround" label="Explore"></p-button>
     </p-sidebar>
-  </div>
+  </div>  
   </div>
 
   <!-- <div class="p-2 w-full">
@@ -52,7 +52,3 @@
     </ng-container>
   </swiper-container> 
   </ng-container>
-
-
-<div class="bottomDiv">
-</div>

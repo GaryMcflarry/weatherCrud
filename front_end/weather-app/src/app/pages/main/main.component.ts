@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TreeNode } from 'primeng/api';
-import { interval, map, startWith, tap } from 'rxjs';
+import { combineLatest, interval, map, startWith, tap } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { CycleServiceService } from 'src/app/services/cycle-service.service';
 
@@ -32,6 +32,7 @@ export class MainComponent {
 
   constructor(private cycle: CycleServiceService, public router: Router, public api : ApiService) {}
 
+
   menuCol$ = interval(60_000).pipe(
     startWith('Starting timer'),
     tap(data => console.log("menu color: " , data)),
@@ -47,6 +48,12 @@ export class MainComponent {
      }
 
      return this.menuCss
+    })
+  )
+
+  vm$= combineLatest([this.menuCol$, this.api.tokenExp$]).pipe(
+    map(([menu, tokenExp ]) => {
+        return{menu, tokenExp}
     })
   )
 

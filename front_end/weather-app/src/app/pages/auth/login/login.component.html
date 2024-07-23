@@ -14,13 +14,11 @@
     <!-- <button (click)="logForm()">Just a button</button> -->
     <form [formGroup]="formLogin">
     <div class="inputDiv">
-      <input class="input" pInputText pKeyFilter="User" placeholder="Username" formControlName="username" />
-      <P>{{formLogin.errors}}</P>
+      <input class="input" type="text" placeholder="Username" formControlName="username"/>
     </div>
 
     <div class="inputDiv">
-      <p-password class="pInput" placeholder="Password" formControlName="password" [feedback]="false" [toggleMask]="true"></p-password>
-
+      <input class="input" type="password" placeholder="Password" formControlName="password">
     </div>
 
     <div class="butDiv">
@@ -31,7 +29,6 @@
 
     <div class="signDiv">
       <button (click)="signup()" class="signBut" mat-button><p class="p">Don't have an account? Sign up</p></button>
-
     </div>
   </main>
 <!-- </body>  -->

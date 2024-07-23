@@ -41,7 +41,7 @@ export class CardComponent {
             country: data.location.country 
           };
         }),
-        tap((data:any) => {console.log("Current: " , data)}),
+        tap((data:any) => {console.log("Card Current: " , data)}),
       );
     })
   );

@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class WebRequestService {
   //only meant to be read
   readonly ROOT_URL: any;
-  key: any;
+  readonly key: any;
 
   constructor(private http: HttpClient) {
     //making strings for the key and rooting path to communicate with the api

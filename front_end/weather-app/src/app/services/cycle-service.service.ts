@@ -37,9 +37,9 @@ export class CycleServiceService {
             this.CSSclass = 'night'
         }
       // }
-      console.log("current hour: ", currentTime)
+      //console.log("current hour: ", currentTime)
       // console.log("Fetched hour: ", hour)
-      console.log("CSS: " , this.CSSclass)
+      //console.log("CSS: " , this.CSSclass)
       return this.CSSclass
     }
   })

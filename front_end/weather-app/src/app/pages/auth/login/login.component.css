@@ -1,14 +1,10 @@
-
-
-.img{
-
+.img {
   width: 125px;
   height: 125px;
   margin-left: 8vw;
   margin-top: 8vh;
-
 }
-.imgDiv{
+.imgDiv {
   height: 30vh;
   width: 100vw;
 }
@@ -21,14 +17,14 @@
   align-items: flex-start;
 }
 
-h1{
+h1 {
   font-size: xx-large;
   text-shadow: 1cm;
   color: white;
   font-family: var(--font-family);
 }
 
-.p{
+.p {
   font-size: x-small;
   text-shadow: 1cm;
   color: white;
@@ -42,14 +38,14 @@ h1{
   align-items: center;
 }
 
-.input {
+input {
   width: 80vw;
-  height: 7vh
-}
-
-.pInput {
-  width: 80vw;
-  height: 7vh
+  height: 7vh;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 3px 10px rgb(62 63 64 / 53%);
+  font-size: larger;
+  font-weight: 500;
 }
 
 .butDiv {
@@ -58,22 +54,22 @@ h1{
   justify-content: center;
 }
 
-.but{
+.but {
   margin-top: 10px;
-    height: 6vh;
-    width: 23vw;
-    background-color: white;
+  height: 6vh;
+  width: 23vw;
+  background-color: white;
 }
 
-.signDiv{
+.signDiv {
   display: flex;
   justify-content: center;
   width: 100vw;
   margin-top: 10px;
-  height: 3vh
+  height: 3vh;
 }
 
-.signBut { 
+.signBut {
   background-color: transparent;
 }
 
@@ -87,17 +83,17 @@ h1{
 }
 
 .dialogButDiv {
-  margin-top:  50px;
+  margin-top: 50px;
   align-items: center;
   display: grid;
   justify-content: center;
 }
 
-.dialogBut{
-    height: 6vh;
-    width: 30vw;
+.dialogBut {
+  height: 6vh;
+  width: 30vw;
 }
 
-.dialogP{
-  color:  grey;
+.dialogP {
+  color: grey;
 }

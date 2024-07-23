@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { combineLatest, interval, map, startWith, tap } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -15,7 +16,14 @@ export class ProfileComponent {
     private router: Router
   ) {}
 
-  username: string = this.api.getToken().username;
+
+  vm$ = combineLatest([this.api.user, this.api.tokenExp$]).pipe(
+    map(([user, tokenExp$ ]) => {
+      return {user, tokenExp$}
+    })
+  )
+
+  
 
   goBack() {
     this.router.navigate(['/main']);

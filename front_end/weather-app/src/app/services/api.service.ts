@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WebRequestService } from './web-request.service';
-import { tap, map, catchError, throwError, BehaviorSubject } from 'rxjs';
+import { tap, map, catchError, throwError, BehaviorSubject, interval, startWith } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { StorageService } from './storage.service';
 import { MessageService } from 'primeng/api';
@@ -60,7 +60,8 @@ export class ApiService {
     tap((data: any) => console.log('user', data)),
     map((data: any) => {
       //can use this info
-      return { locations: data.locations };
+      return { locations: data.locations,
+                username: data.username };
     })
     // tap((data: any) => console.log('user', data))
   );
@@ -69,6 +70,26 @@ export class ApiService {
     this.store.setItem('Token', token);
     this.user$.next(this.getToken());
   }
+
+
+  tokenExp$ = interval(60_000).pipe(
+    startWith('Starting timer'),
+    tap((data) => console.log('tokenExp$', data)),
+    map((data) => {
+      const epoch = new Date().getTime() / 1000;
+      console.log('Exp Time:', this.getToken().exp);
+      console.log('Epoch Time: ', epoch);
+
+      if (this.getToken().exp < epoch) {
+        this.expMessage('Session Has Expired');
+        this.logOut();
+      }
+    })
+  );
+
+  // resetTimer(timer: any) {
+  //   return timer
+  // }
 
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -105,7 +126,7 @@ export class ApiService {
 
   logOut() {
     this.store.removeItem('Token');
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/auth']);
   }
 
   searchLocation_(info: any) {

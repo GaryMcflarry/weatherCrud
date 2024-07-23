@@ -78,7 +78,6 @@ router.post("/signup", (req, res, next) => {
               .then((result) => {
                 //code generated upon success
                 console.log(result);
-                4;
                 res.status(201).json({
                   message: "User Created",
                   success: true,
@@ -121,7 +120,7 @@ router.post("/login", (req, res, next) => {
         if (err) {
           //if they do not match
           return res.status(401).json({
-            message: "Authorization failed",
+            message: "Authorization Failed",
             success: false,
           });
         }
@@ -169,7 +168,7 @@ router.post("/login", (req, res, next) => {
 });
 
 //The delete route
-router.delete("/delete/:userId",  (req, res, next) => {
+router.delete("/delete/:userId", checkAuth,  (req, res, next) => {
   //id obtianed from the url
   const id = req.params.userId;
   //checking to see if the id is correct
@@ -191,7 +190,7 @@ router.delete("/delete/:userId",  (req, res, next) => {
 });
 
 //The display route
-router.get("/display", (req, res, next) => {
+router.get("/display", checkAuth, (req, res, next) => {
   //Obtaining all available users
   User.find()
     .exec()
@@ -217,7 +216,7 @@ router.get("/display", (req, res, next) => {
 });
 
 //The spesific display route
-router.get("/display/:userId",  (req, res, next) => {
+router.get("/display/:userId", checkAuth, (req, res, next) => {
   //Obtaining requested id from user
   const id = req.params.userId;
   //Finding the user who has that id
@@ -245,7 +244,7 @@ router.get("/display/:userId",  (req, res, next) => {
 });
 
 //The edit route
-router.patch("/edit/:userId", (req, res, next) => {
+router.patch("/edit/:userId", checkAuth, (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -278,7 +277,7 @@ router.patch("/edit/:userId", (req, res, next) => {
     });
 });
 
-router.post("/:userId/addLocation",  (req, res, next) => {
+router.post("/:userId/addLocation", checkAuth, (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -309,7 +308,7 @@ router.post("/:userId/addLocation",  (req, res, next) => {
             process.env.JWT_KEY,
             {
               //token only lasts 10 min
-              expiresIn: "10m",
+              expiresIn: "1m",
             }
           );
           res.status(200).json({
@@ -317,10 +316,6 @@ router.post("/:userId/addLocation",  (req, res, next) => {
             //once everything is successful the user's details and the token will be sent for use
             data: {
               token: token,
-              username: user.username,
-              userId: user._id,
-              locations: user.locations,
-              admin: user.admin,
             },
             success: true,
           });
@@ -335,7 +330,7 @@ router.post("/:userId/addLocation",  (req, res, next) => {
     );
 });
 
-router.post("/:userId/removelocation",  (req, res, next) => {
+router.post("/:userId/removelocation", checkAuth,  (req, res, next) => {
   //checking the requesing id and equaling it to the id variable
   console.log(req.params);
   const id = req.params.userId;
@@ -366,7 +361,7 @@ router.post("/:userId/removelocation",  (req, res, next) => {
             process.env.JWT_KEY,
             {
               //token only lasts 10 min
-              expiresIn: "10m",
+              expiresIn: "1m",
             }
           );
           res.status(200).json({
@@ -374,10 +369,6 @@ router.post("/:userId/removelocation",  (req, res, next) => {
             //once everything is successful the user's details and the token will be sent for use
             data: {
               token: token,
-              username: user.username,
-              userId: user._id,
-              locations: user.locations,
-              admin: user.admin,
             },
             success: true,
           });
@@ -392,7 +383,7 @@ router.post("/:userId/removelocation",  (req, res, next) => {
     );
 });
 
-router.post("/remove",  (req, res, next) => {
+router.post("/remove", checkAuth,  (req, res, next) => {
   // Extract the user ID from the request body or from the authenticated user's data
   const userIdToRemove = req.body.userId; // Assuming the client sends the user ID to remove
 

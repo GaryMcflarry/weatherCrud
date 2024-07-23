@@ -1,7 +1,6 @@
 <!-- <ng-container *ngIf="  params$ | async as params; else ShowExplore">
 </ng-container> -->
 
-
 <ng-container *ngIf="vm$ | async as vm ">
     <!-- <pre>{{vm | json}}</pre> -->
 
@@ -9,9 +8,6 @@
     <ng-container *ngIf="vm.params; else ShowExplore">
         <!-- injecting variable with values into component that will be used -->
         <app-weather-display [data]="vm.params.location" [showBackButton]=true [addButton]=true></app-weather-display>
-
-
-
     </ng-container>
     
     <!-- will display when none of the cards were selectedL -->
