@@ -13,15 +13,13 @@
         <form [formGroup]="formSignUp">
 
             <div class="userInput">
-                <input class="input" pInputText pKeyFilter="User" placeholder="Username" formControlName="username" />
-                <P>{{formSignUp.errors}}</P>
+                <input type="text" placeholder="Username" formControlName="username"/>
             </div>
             <div class="passwordInput">
-                <p-password styleClass="width: 100%;" placeholder="Password" formControlName="password"
-                    [feedback]="false" [toggleMask]="true"></p-password>
+                <input type="password" placeholder="Password" formControlName="password">
             </div>
             <div class="butDiv">
-                <button mat-raised-button [disabled]="formSignUp.invalid" (click)="signUp()">Sign Up</button>
+                <button mat-raised-button class="but" [disabled]="formSignUp.invalid" (click)="signUp()">Sign Up</button>
             </div>
         </form>
         <button mat-button class="backBut" (click)="goBack()">

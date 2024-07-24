@@ -15,7 +15,7 @@ body { margin: 0; font-family: var(--font-family); }
   background-repeat: no-repeat;
 }
 .morning{
-    background-image: url('src/assets/images/main_morning.jpg');
+    background-image: url('src/assets/images/morning.jpg');
     
   }
   
@@ -25,31 +25,10 @@ body { margin: 0; font-family: var(--font-family); }
   }
   
   .midday{
-    background-image: url('src/assets/images/main_midday.png');
-    
+    background-image: url('src/assets/images/main_midday.png'); 
   }
   
   .night{
-    background-image: url('src/assets/images/main_night.png');
-    
-  }
-  
-  .morning-L{
-    background-image: url('src/assets/images/morning.jpg');
-    
-  }
-  
-  .afternoon-L{
-    background-image: url('src/assets/images/afternoon.jpg');
-    
-  }
-  
-  .midday-L{
-    background-image: url('src/assets/images/midday.avif');
-    background-size: auto; 
-  }
-  
-  .night-L{
     background-image: url('src/assets/images/night.jpg');
-    
   }
+

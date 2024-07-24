@@ -33,6 +33,7 @@ export class SignupComponent {
 
   borderCol = '';
 
+  //Timer to get accurate border color based on time of day
   border$ = interval(60_000).pipe(
     startWith('Starting timer'),
     tap((data) => console.log('border timer:', data)),
@@ -54,7 +55,7 @@ export class SignupComponent {
   );
 
   signUp() {
-    console.log('Form Signup:', this.formSignUp.value);
+    //console.log('Form Signup:', this.formSignUp.value);
     if (this.formSignUp.valid) {
       this.api.signUpUser(this.formSignUp.value);
     }

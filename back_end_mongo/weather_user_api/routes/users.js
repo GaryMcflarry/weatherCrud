@@ -167,28 +167,6 @@ router.post("/login", (req, res, next) => {
     });
 });
 
-//The delete route
-router.delete("/delete/:userId", checkAuth,  (req, res, next) => {
-  //id obtianed from the url
-  const id = req.params.userId;
-  //checking to see if the id is correct
-  console.log(id);
-  //removing the user that has the requested id
-  User.remove({ _id: id })
-    .exec()
-    .then((result) => {
-      //if success will send code
-      res.status(200).json(result);
-    })
-    .catch((err) => {
-      //error code
-      console.log(err);
-      res.status(500).json({
-        error: err,
-      });
-    });
-});
-
 //The display route
 router.get("/display", checkAuth, (req, res, next) => {
   //Obtaining all available users
@@ -308,7 +286,7 @@ router.post("/:userId/addLocation", checkAuth, (req, res, next) => {
             process.env.JWT_KEY,
             {
               //token only lasts 10 min
-              expiresIn: "1m",
+              expiresIn: "10m",
             }
           );
           res.status(200).json({

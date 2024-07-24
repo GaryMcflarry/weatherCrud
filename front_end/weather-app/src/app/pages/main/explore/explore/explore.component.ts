@@ -21,41 +21,31 @@ import { CycleServiceService } from 'src/app/services/cycle-service.service';
   styleUrls: ['./explore.component.css'],
 })
 export class ExploreComponent {
+
   //checking to see if the params has any value (the name of the location)
   params$ = this.activated.params.pipe(
-    tap((data: any ) => console.log('params: ' , data)),
+    //tap((data: any ) => console.log('params: ' , data)),
     map((data: any) => (Object.keys(data).length > 0 ? data : null))
   );
 
   //combining two obs to make use of them in the html
-
-
   vm$ = combineLatest([this.api.user, this.params$, this.api.tokenExp$]).pipe(
     map(([user, params, ExpltokenExp$]) => {
       // console.log(user)
-      const suggested = this.suggestedlocations.filter(
-        (x) =>
+      const suggested = this.suggestedlocations.filter((x) =>
           // console.log("x =>" , x)
           // console.log("index =>" , user.locations.indexOf(x))
-          // return
           //making use of newly created array called suggested that will only house suggested locations that are not in the users locations array
           user.locations.indexOf(x) == -1
-        // }
       );
       // console.log("sugg =>" , suggested)
       return { user, params, suggested, ExpltokenExp$ };
     })
   );
 
- 
-
   sidebarVisible!: boolean;
   menuCss = '';
-
   visible!: boolean;
-  // formSearch = this.formBuilder.group({
-  //   search: new FormControl('', Validators.compose([Validators.required])),
-  // });
 
   showDialog() {
     this.visible = true;
@@ -90,64 +80,14 @@ export class ExploreComponent {
     '',
     Validators.compose([Validators.required, Validators.minLength(3)])
   );
-  // locationSearch = new BehaviorSubject<any>('')
-
-  // fork = forkJoin({
-
-  //   lat_lonResults: this.locationSearch.valueChanges.pipe(
-  //     // tap((data: any) => console.log("Ds:", data)),
-  //     debounce(() => timer(1000)),
-  //     tap((data: any) => console.log('lon/lon Ds:', data)),
-  //     switchMap((data: any) => {
-  //       if (data) {
-  //       return this.api
-  //         .searchLocation_(data)
-  //         .pipe(
-  //           tap((search: any) => console.log('lan/lon Ds response:', search)),
-  //           map((data: any)=> {
-
-  //             let locations = data.map((x: any) => `${x.lat}, ${x.lon}`)
-  //             return locations
-  //           })
-  //           );
-  //         } else {
-  //           return data;
-  //         }
-  //     }),
-  //     tap((data: any) => console.log('lan/lon api searchField:', data)),
-  //   ),
-
-  //   nameResults: this.locationSearch.valueChanges.pipe(
-  //     // tap((data: any) => console.log("Ds:", data)),
-  //     debounce(() => timer(1500)),
-  //     tap((data: any) => console.log('name Ds:', data)),
-  //     switchMap((data: any) => {
-  //       if (data) {
-  //       return this.api
-  //         .searchLocation_(data)
-  //         .pipe(
-  //           tap((search: any) => console.log('nameSearch response:', search)),
-  //           map((data: any)=> {
-
-  //             return data.region
-  //           })
-  //           );
-  //         } else {
-  //           return data;
-  //         }
-  //     }),
-  //     tap((data: any) => console.log('name searchField:', data)),
-  //   ),
-
-  // })
 
   searchResults = this.locationSearch.valueChanges.pipe(
     debounce(() => timer(1000)),
-    tap((data: any) => console.log('Ds:', data)),
+    //tap((data: any) => console.log('Ds:', data)),
     switchMap((data: any) => {
       if (data.length >= 3) {
         return this.api.searchLocation_(data).pipe(
-          tap((search: any) => console.log('Ds response:', search)),
+          //tap((search: any) => console.log('Ds response:', search)),
           map((data: any) => {
             console.log(data);
             if (data.length === 0) {
@@ -174,25 +114,12 @@ export class ExploreComponent {
         });
       }
     }),
-    // tap((search: any) => console.log('Ds response:', search)),
-    // map((data: any) => {
-    //   if (data.length === 0) {
-    //       this.errMessage = 'Enter more Characters please :('
-    //   return null
-    //   }else {
-    //     return data
-    //   }
-    // }),
-    tap((data: any) => console.log('return:', data))
+    //tap((data: any) => console.log('return:', data))
   );
-
-  // search() {
-  //   console.log('form search: ', this.formSearch.value);
-  // }
 
   menuCol$ = interval(60_000).pipe(
     startWith('Starting timer'),
-    tap((data) => console.log('menu explore color: ', data)),
+    //tap((data) => console.log('menu explore color: ', data)),
     map(() => {
       if (this.cycle.CSSclass == 'midday') {
         this.menuCss = 'bg-cyan-500';
@@ -203,7 +130,6 @@ export class ExploreComponent {
       } else {
         this.menuCss = 'bg-indigo-400';
       }
-
       return this.menuCss;
     })
   );

@@ -6,19 +6,15 @@
     </div>
     <div class="titleDiv">
       <h1>Dusk & Dawn</h1>
-      <!-- <button (click)="showtoast()">toast</button> -->
     </div>
-  <!-- </header> -->
 
-  <main>
-    <!-- <button (click)="logForm()">Just a button</button> -->
     <form [formGroup]="formLogin">
     <div class="inputDiv">
-      <input class="input" type="text" placeholder="Username" formControlName="username"/>
+      <input type="text" placeholder="Username" formControlName="username"/>
     </div>
 
     <div class="inputDiv">
-      <input class="input" type="password" placeholder="Password" formControlName="password">
+      <input type="password" placeholder="Password" formControlName="password">
     </div>
 
     <div class="butDiv">
@@ -26,10 +22,7 @@
     </div>
   </form>
 
-
     <div class="signDiv">
       <button (click)="signup()" class="signBut" mat-button><p class="p">Don't have an account? Sign up</p></button>
     </div>
-  </main>
-<!-- </body>  -->
 </div>

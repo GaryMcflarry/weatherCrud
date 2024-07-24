@@ -21,6 +21,7 @@ export class AppComponent {
 
 
   //since app component is the very first component to render after reload , it will send the stored token to the user behaviour subject in the api service
+  //good for when a new token is created, letting all pages keep up to date
   ngOnInit() {
     this.store.getItem('Token');
     this.api.MaintainUser(this.store.getItem('Token'));

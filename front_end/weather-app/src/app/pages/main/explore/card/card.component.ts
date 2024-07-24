@@ -41,11 +41,10 @@ export class CardComponent {
             country: data.location.country 
           };
         }),
-        tap((data:any) => {console.log("Card Current: " , data)}),
+        //tap((data:any) => {console.log("Card Current: " , data)}),
       );
     })
   );
-
 
   //method used for obtaining the appriopriate class name for the background
   setClass(hour:any) {
@@ -59,7 +58,6 @@ export class CardComponent {
         this.bg = 'night'
     }
   }
-
   //upon render will update the behaviour subject with the injected data (locations name)
   ngOnInit() {
     this.params$.next(this.data);
@@ -67,8 +65,8 @@ export class CardComponent {
 
   //if can rout becomes true the entire card will become a button that will route to a version of weather-display that shows all the info based on the injected location
   router() {
-    console.log('route variable', this.canRoute)
-    console.log('data variable', this.data)
+    //console.log('route variable', this.canRoute)
+    //console.log('data variable', this.data)
     this.route.navigate([`/main/explore/${this.data}`])
   }
 

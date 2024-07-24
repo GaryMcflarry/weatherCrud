@@ -4,12 +4,11 @@ import { MainComponent } from './main.component';
 import { ExploreComponent } from './explore/explore/explore.component';
 import { ProfileComponent } from './profile/profile/profile.component';
 
-
+//Routing for main/...
 const routes: Routes = [
-  {path: '', component: MainComponent},
+{path: '', component: MainComponent},
 {path: 'explore', component: ExploreComponent},
-//used for the locations that are seleted by the cards
-//there is a check on explore component that will route to weather-display 
+//Params for location display for explore component
 {path: 'explore/:location', component: ExploreComponent},
 {path: 'profile', component: ProfileComponent}
 ];

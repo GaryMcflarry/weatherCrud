@@ -6,6 +6,7 @@ import { CycleServiceService } from 'src/app/services/cycle-service.service';
 import { WebRequestService } from 'src/app/services/web-request.service';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
+
 //small array to map days of week to index num for forecast obs
 const daysOfWeek = [
   'Sunday',
@@ -24,14 +25,13 @@ const daysOfWeek = [
 
 
 export class WeatherDisplayComponent {
-  // time!: any;
-  // timeFormatted!: any;
+
   sidebarVisible!: boolean;
-  // time_ = new Date();
 
   @Input() data! : string;
   @Input() showBackButton : boolean = false
   @Input() addButton : boolean = false
+
   //observablle that takes note of the routing params
   // params$ = this.userService.user.pipe(
   //   // tap((data) => console.log('Params entered:', data)),
@@ -40,34 +40,24 @@ export class WeatherDisplayComponent {
   //   // tap((data) => console.log('Params entered 2 :', data))
   // );
 
-
   //making use of a behaviour subject obs, the way that i am using it is that it is a object that can house a defaut 
   //value but once we add a new value to it (.next('')) it can trigger other observable that can make use of that value
   //These obs can return the edited info (.pipe()) and be use however I see fit
-  // either through HTML (*ngIF or *ngFor) ot ts (.subscribe()) 
+  //either through HTML (*ngIF or *ngFor) ot ts (.subscribe())
+
   params$ = new  BehaviorSubject<any>('')
-
-
-  // params$ = this.userService.user.pipe(
-  //   tap(data => console.log('param data ',data)),
-  //   //if the data exists
-  //   filter(data => data),
-  //   map(data => {
-  //     return data.locations[this.swiperEl.nativeElement.swiper.activeIndex];
-  //   })
-
 
   //obsevable that takes info of another and edits it's data
   //obs(observable) that deals with the current call to the api
   current$ = this.params$.pipe(
-    //switchmap takes data from other pipe and allows to alter its data
+    //switchmap takes data from other pipe and allows to use its data
     switchMap((data: any) => {
       return this.web.get('current', data).pipe(
         //tap allows one to show the stream of data that flows through a pipe
         //tap((data: any) => console.log("Unedited Current:", data)),
         // map allows one to take the data from a tap and alter it
         map((data: any) => {
-          //returning data  so that tap is now showing certian things
+          //returning data so that tap is now showing certian things
           return {
             currentTemp: data.current.temp_c,
             location: data.location.name,
@@ -90,7 +80,6 @@ export class WeatherDisplayComponent {
         //thus JSON.parse(JSON.stringify(data)) being used to simulate the a hollow copy to show myself some progress 
         //tap((data: any) => console.log("Unedited Forecast:", JSON.parse(JSON.stringify(data)))),
         map((data: any) => {
-
           const firstForecastDay = data.forecast.forecastday[0];
           //checking if the forecast days array is not null
           if (firstForecastDay) {
@@ -118,12 +107,8 @@ export class WeatherDisplayComponent {
                               fImage: hour.condition.icon,
                               fPrecip: hour.chance_of_rain
                       }
-                    // } else {
-                      
-                    // }
                   })
             });
-
             return {
                 Days : data.forecast.forecastday,
                 minTemp : firstForecastDay.day.mintemp_c,
@@ -145,17 +130,12 @@ export class WeatherDisplayComponent {
   vm$ = combineLatest([this.forcast$, this.current$]).pipe(
     //Obs that is taking two obs and putting them into an array, making things more ordered for console.log
     map(([forecast, current]: any) => {
-      
       return {
         forecast, current
       }
     }),
-    tap((data) => console.log('Combined: ', data)),
+  //tap((data) => console.log('Combined: ', data)),
   );
-
-  //.subscribe((data: any) => {
-  //   this.data = data;
-  // })
 
   constructor(
     private cycle: CycleServiceService,
@@ -166,50 +146,23 @@ export class WeatherDisplayComponent {
   ) {}
 
   ngOnInit() {
-    // this.web.get(this.town).subscribe((data: any) => {
-    //   this.data = data;
-    // })
-
-    // this.getForcast()
-
-    console.log('data: ', this.data);
-
-    //inputing data into behaviourSubject to start obs cycle 
+  	//console.log('data: ', this.data);
+    //inputing INJECTED data into behaviourSubject to start obs cycle 
     this.params$.next(this.data);
-    this.cycle.login == false
-
   }
 
-  //method that makes use of the cycle service
-  // setClass() {
-  //   this.cycle.cycle(false)
-  // }
-
-//  formattime(date: Date): string {
-//     if (date.getMinutes() < 10) {
-//       return date.getHours() + ':0' + date.getMinutes();
-//     }
-//     return date.getHours() + ':' + date.getMinutes();
-//   }
-
-  // getForcast() {
-  //   this.cycle.getData('forecast', {q: 'London', days: '1', aqi: 'no'})
-
-  // }
-
+  //only available if add button is present
   add() {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to add Location?',
       accept: () => {
           this.api.addLocation(this.data)
         },
-        reject: () => {
-          
-          console.log('no')
+        reject: () => {     
+        //console.log('no')
       }
-
   });
-  }
+}
 
   goBack() {
     this.route.navigate(["/main/explore"])

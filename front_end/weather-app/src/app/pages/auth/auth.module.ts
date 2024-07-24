@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,9 +19,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { CardModule } from 'primeng/card';
 import { SignupComponent } from './signup/signup/signup.component';
 
-
-
-
+//connected components and their imports
 @NgModule({
   declarations: [
     LoginComponent,

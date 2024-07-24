@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { WebRequestService } from './web-request.service';
-import { tap, map, catchError, throwError, BehaviorSubject, interval, startWith } from 'rxjs';
+import {
+  tap,
+  map,
+  catchError,
+  throwError,
+  BehaviorSubject,
+  interval,
+  startWith,
+} from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { StorageService } from './storage.service';
 import { MessageService } from 'primeng/api';
@@ -19,13 +27,11 @@ export class ApiService {
     public router: Router
   ) {}
 
-  // storeToken(token: any) {
-  //   this.store.setItem('Token', token)
-  //   this.user$.next(this.getToken())
-  // }
+  //METODS FOR OBTAINING AND USING TOKEN!!!!!
+  //========================================================================================================
 
   getToken() {
-    return this.decrypt(this.store.getItem('Token')); //METODS FOR OBTAINING AND USING TOKEN!!!!!
+    return this.decrypt(this.store.getItem('Token'));
   }
   decrypt(token: any) {
     return this.decipherToken(jwtDecode(token));
@@ -34,10 +40,10 @@ export class ApiService {
     //console.log('decrypted token info (LETS GOOOOOOO)' , info)
     return info;
   }
-  // getUserInfo() {
-  //   return this.getToken().userId
-  // }
 
+  //========================================================================================================
+
+  //Message for AFK expiration
   expMessage(message: string) {
     this.message.add({
       severity: 'error',
@@ -47,39 +53,14 @@ export class ApiService {
     });
   }
 
-  //---------------------------------------------------------------------------------------------------------------------------------------------------------
-
-  // making use of a behaviour subject obs, the way that i am using it is that it is a object that can house a defaut
-  // value but once we add a new value to it (.next('')) it can trigger other observable that can make use of that value
-  // These obs can return the edited info (.pipe()) and be use however I see fit
-  // either through HTML (*ngIF or *ngFor) ot ts (.subscribe())
-  private user$ = new BehaviorSubject<any>('Default');
-  //obs using user$                                                         //OBS AND METHOD FOR GETTING INFO FROM LOGIN AND SENDING IT TO
-  //WEATHER-DISPLAY THROUGH MAIN COMPONENT AND CARD COMPONENT THROUGH EXPLORE PAGE
-  user = this.user$.asObservable().pipe(
-    tap((data: any) => console.log('user', data)),
-    map((data: any) => {
-      //can use this info
-      return { locations: data.locations,
-                username: data.username };
-    })
-    // tap((data: any) => console.log('user', data))
-  );
-  //inputing new value into behaviourSubject obs, and storing newly created token
-  MaintainUser(token: any) {
-    this.store.setItem('Token', token);
-    this.user$.next(this.getToken());
-  }
-
-
+  //Checking token expiration every min
   tokenExp$ = interval(60_000).pipe(
     startWith('Starting timer'),
-    tap((data) => console.log('tokenExp$', data)),
+    //tap((data) => console.log('tokenExp$', data)),
     map((data) => {
       const epoch = new Date().getTime() / 1000;
-      console.log('Exp Time:', this.getToken().exp);
-      console.log('Epoch Time: ', epoch);
-
+      //console.log('Exp Time:', this.getToken().exp);
+      //console.log('Epoch Time: ', epoch);
       if (this.getToken().exp < epoch) {
         this.expMessage('Session Has Expired');
         this.logOut();
@@ -87,15 +68,62 @@ export class ApiService {
     })
   );
 
-  // resetTimer(timer: any) {
-  //   return timer
-  // }
+  //========================================================================================================
 
-  //---------------------------------------------------------------------------------------------------------------------------------------------------------
+  // making use of a behaviour subject obs, the way that i am using it is that it is a object that can house a defaut
+  // value but once we add a new value to it (.next('')) it can trigger other observables that can make use of that value
+  // These obs can return the edited info (.pipe()) and be use however I see fit
+  // either through HTML (*ngIF or *ngFor) ot ts (.subscribe())
+
+  private user$ = new BehaviorSubject<any>('Default');
+
+  user = this.user$.asObservable().pipe(
+    //tap((data: any) => console.log('user', data)),
+    map((data: any) => {
+      //can use this info
+      return { locations: data.locations, username: data.username };
+    })
+    // tap((data: any) => console.log('user', data))
+  );
+
+  //inputing new value into behaviourSubject obs, and storing newly created token
+  MaintainUser(token: any) {
+    this.store.setItem('Token', token);
+    this.user$.next(this.getToken());
+  }
+
+  //========================================================================================================
+
+  logOut() {
+    this.store.removeItem('Token');
+    this.router.navigate(['/auth']);
+  }
+
+//========================================================================================================
+
+//WEATHER API SEARCH METHOD
+
+  searchLocation_(info: any) {
+    return this.web.get('search', info).pipe(
+      map((data: any) => {
+        return data.map((element: any) => ({
+          location: element.name,
+          lat: element.lat,
+          lon: element.lon,
+          coordinates: `${element.lat}, ${element.lon}`,
+        }));
+      }),
+      //tap((data: any) => {console.log('search api; ', data);})
+    );
+  }
+
+//========================================================================================================
+
+//USER CRUD METHODS
 
   userLogin(info: any) {
     this.web
-      .mongoPost('users/login', info)
+      .mongoPost('weather/login', info)
       .pipe(
         catchError((error) => {
           this.message.add({
@@ -114,7 +142,7 @@ export class ApiService {
             summary: 'Success',
             life: 3000,
           });
-          console.log('Login Request:', response);
+          //console.log('Login Request:', response);
           //sending to obs in the userService
           this.MaintainUser(response.data.token);
           // this.MaintainUser(this.getToken())
@@ -124,47 +152,10 @@ export class ApiService {
       });
   }
 
-  logOut() {
-    this.store.removeItem('Token');
-    this.router.navigate(['/auth']);
-  }
-
-  searchLocation_(info: any) {
-    return this.web.get('search', info).pipe(
-      map((data: any) => {
-        return data.map((element: any) => ({
-          location: element.name,
-          lat: element.lat,
-          lon: element.lon,
-          coordinates: `${element.lat}, ${element.lon}`,
-        }));
-      }),
-      tap((data: any) => {
-        console.log('search api; ', data);
-      })
-    );
-  }
-
-  // searchLocation(info :any) {
-  //   this.web.get('search', info.search).pipe(
-  //     tap((data: any) => console.log(data))
-  //   ).subscribe(
-  //     (response: any) => {
-  //       // Handle the response data here
-  //       this.router.navigate([`main/explore/${response[0].name}`])
-  //     },
-  //     (error: any) => {
-  //       // Handle any errors that occur during the HTTP request
-  //       console.error("Error:", error);
-  //     }
-  //   );
-  // }
-  //METHODS FOR HANDLING THE LOGIN AND SIGNUP REQUESTS
-
   signUpUser(info: any) {
-    console.log('Form Sign up: ', info);
+    //console.log('Form Sign up: ', info);
     this.web
-      .mongoPost('users/signup', info)
+      .mongoPost('weather/signup', info)
       .pipe(
         catchError((error) => {
           this.message.add({
@@ -185,14 +176,14 @@ export class ApiService {
             life: 3000,
           });
           this.router.navigate(['/auth']);
-          console.log('signup request:', response);
+          //console.log('signup request:', response);
         }
       });
   }
 
   removeAcc(info: string) {
     this.web
-      .mongoPost(`users/remove`, { _id: info })
+      .mongoPost(`weather/remove`, { userId: info })
       .pipe(
         catchError((error) => {
           this.message.add({
@@ -212,7 +203,7 @@ export class ApiService {
           detail: response.message,
           life: 3000,
         });
-        console.log('remove request:', response);
+        //console.log('remove request:', response);
       });
   }
 
@@ -220,14 +211,13 @@ export class ApiService {
 
   addLocation(info: string) {
     const userObj = this.user$.getValue();
-    console.log('locations', userObj);
+    //console.log('locations', userObj);
     userObj.locations.forEach((element: any) => {
-      console.log('element', element);
+      //console.log('element', element);
       if (info == element) {
         this.present = true;
       }
     });
-
     if (this.present) {
       this.message.add({
         severity: 'error',
@@ -237,7 +227,7 @@ export class ApiService {
       });
     } else {
       this.web
-        .mongoPost(`users/${this.getToken().userId}/addLocation`, {
+        .mongoPost(`weather/${this.getToken().userId}/addLocation`, {
           locations: info,
         })
         .pipe(
@@ -260,9 +250,8 @@ export class ApiService {
               detail: 'Location was added',
               life: 3000,
             });
-            console.log('add request:', response);
+            //console.log('add request:', response);
             this.MaintainUser(response.data.token);
-
             //console.log(response.user)
             this.router.navigate(['/main']);
           }
@@ -272,7 +261,7 @@ export class ApiService {
 
   removeLocation(info: string) {
     this.web
-      .mongoPost(`users/${this.getToken().userId}/removeLocation`, {
+      .mongoPost(`weather/${this.getToken().userId}/removeLocation`, {
         locations: info,
       })
       .pipe(
@@ -295,9 +284,12 @@ export class ApiService {
             detail: response.message,
             life: 3000,
           });
-          console.log('remove request:', response);
+          //console.log('remove request:', response);
           this.MaintainUser(response.data.token);
         }
       });
   }
+
+//========================================================================================================
+
 }

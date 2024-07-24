@@ -5,15 +5,18 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
 
-  constructor() { }
+  constructor() {}
+
   //used by user service to store set item
   setItem(key: string, value : string) {
     localStorage.setItem(key, value)
   }
+
   //used to retrieve set item
   getItem(key: string) {
     return localStorage.getItem(key)
   }
+  
   //used to delete set item
   removeItem(key: string) {
     localStorage.removeItem(key)

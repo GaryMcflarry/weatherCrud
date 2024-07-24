@@ -10,8 +10,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { InterceptorService } from './services/interceptor.service';
 
+//connected components and their imports
 @NgModule({
-  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
   ],
@@ -23,17 +23,13 @@ import { InterceptorService } from './services/interceptor.service';
     ToastModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    
   ],
   providers: [
     MessageService,
     DatePipe,
     {
-      //allowing the interceptor to look for http requests
       provide: HTTP_INTERCEPTORS,
             useClass: InterceptorService,
             multi: true
